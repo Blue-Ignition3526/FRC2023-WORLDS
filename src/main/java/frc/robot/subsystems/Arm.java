@@ -77,12 +77,6 @@ public class Arm extends SubsystemBase {
     pulleyLeftRight.setNeutralMode(NeutralMode.Brake);
     pulleyRightLeft.setNeutralMode(NeutralMode.Brake);
     pulleyRightRight.setNeutralMode(NeutralMode.Brake);
-
-    // Make arm return to start position
-    while (bottomLimitSwitch.get()) {
-      armSet(Constants.Speeds.armDown);
-    }
-    armSet(0);
   }
 
   // Robot Periodic ///////////////////////////////////////////////////////////////////////
@@ -91,20 +85,32 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Arm Rotation", getEncoderAngle());
 
-    if (!bottomLimitSwitch.get()) m_Encoder.reset();
+    try {
+      if (!bottomLimitSwitch.get()) m_Encoder.reset();
+    } catch (Exception err) {}
   }
 
   // Subsystem commands ///////////////////////////////////////////////////////////////////////
 
   public void armSet(double speed) {
-    allMotors.set(speed);
+    try {
+      allMotors.set(speed);
+    } catch (Exception err) {}
   }
 
   public double getEncoder() {
-    return m_Encoder.get();
+    try {
+      return m_Encoder.get();
+    } catch (Exception err) {
+      return 0;
+    }
   }
 
   public double getEncoderAngle() {
-    return m_Encoder.get() * 360 / 8192;
+    try {
+      return m_Encoder.get() * 360 / 8192;
+    } catch (Exception err) {
+      return 0;
+    }
   }
 }

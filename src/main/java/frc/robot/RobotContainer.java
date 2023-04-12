@@ -29,7 +29,7 @@ public class RobotContainer {
 // Subsystems /////////////////////////////////////////////////////////////////////////////////////////
 
   private final DriveTrain m_driveTrain = new DriveTrain();
-  //private final Arm m_arm = new Arm();
+  private final Arm m_arm = new Arm();
   //private final Grabber m_grabber = new Grabber();
   //private final LED m_led = new LED();
 
@@ -60,11 +60,11 @@ public class RobotContainer {
 // Configure Bindings //////////////////////////////////////////////////////////////////////////////////
 
   private void configureBindings() {
-    //m_operatorController.povUp().onTrue(new MoveArmUp(m_arm, true));
-    //m_operatorController.povUp().onFalse(new MoveArmUp(m_arm, false));
+    m_operatorController.povUp().onTrue(new MoveArmUp(m_arm, true));
+    m_operatorController.povUp().onFalse(new MoveArmUp(m_arm, false));
 
-    //m_operatorController.povDown().onTrue(new MoveArmDown(m_arm, true));
-    //m_operatorController.povDown().onFalse(new MoveArmDown(m_arm, false));
+    m_operatorController.povDown().onTrue(new MoveArmDown(m_arm, true));
+    m_operatorController.povDown().onFalse(new MoveArmDown(m_arm, false));
   }
 
   public Command getAutonomousCommand() {
