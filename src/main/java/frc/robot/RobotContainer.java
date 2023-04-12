@@ -3,6 +3,8 @@ package frc.robot;
 import frc.robot.commands.Arm.MoveArmDown;
 import frc.robot.commands.Arm.MoveArmUp;
 import frc.robot.commands.DriveTrain.Drive;
+import frc.robot.commands.DriveTrain.MoveDistance;
+import frc.robot.commands.DriveTrain.ResetDriveTrainEncoders;
 
 // Subsystems /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,6 +18,7 @@ import frc.robot.subsystems.Grabber;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -26,9 +29,9 @@ public class RobotContainer {
 // Subsystems /////////////////////////////////////////////////////////////////////////////////////////
 
   private final DriveTrain m_driveTrain = new DriveTrain();
-  private final Arm m_arm = new Arm();
-  private final Grabber m_grabber = new Grabber();
-  private final LED m_led = new LED();
+  //private final Arm m_arm = new Arm();
+  //private final Grabber m_grabber = new Grabber();
+  //private final LED m_led = new LED();
 
 // Controller & Triggers //////////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +50,7 @@ public class RobotContainer {
 // Robot Container /////////////////////////////////////////////////////////////////////////////////////
 
   public RobotContainer() {
-    m_led.setRGB(51 / 255, 0, 1);
+    //m_led.setRGB(51 / 255, 0, 1);
 
     m_driveTrain.setDefaultCommand(new Drive(m_driveTrain, () -> m_driverController.getLeftY(), () -> m_driverController.getRightY()));
 
@@ -57,11 +60,11 @@ public class RobotContainer {
 // Configure Bindings //////////////////////////////////////////////////////////////////////////////////
 
   private void configureBindings() {
-    m_operatorController.povUp().onTrue(new MoveArmUp(m_arm, true));
-    m_operatorController.povUp().onFalse(new MoveArmUp(m_arm, false));
+    //m_operatorController.povUp().onTrue(new MoveArmUp(m_arm, true));
+    //m_operatorController.povUp().onFalse(new MoveArmUp(m_arm, false));
 
-    m_operatorController.povDown().onTrue(new MoveArmDown(m_arm, true));
-    m_operatorController.povDown().onFalse(new MoveArmDown(m_arm, false));
+    //m_operatorController.povDown().onTrue(new MoveArmDown(m_arm, true));
+    //m_operatorController.povDown().onFalse(new MoveArmDown(m_arm, false));
   }
 
   public Command getAutonomousCommand() {

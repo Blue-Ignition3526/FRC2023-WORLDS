@@ -5,35 +5,42 @@
 package frc.robot.commands.DriveTrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class ResetDriveTrainEncoders extends CommandBase {
-  DriveTrain driveTrain = null;
+public class MoveDistance extends CommandBase {
 
-  /** Creates a new ResetDriveTrainEncoders. */
-  public ResetDriveTrainEncoders(DriveTrain driveTrain) {
+  private DriveTrain driveTrain;
+  private double distanceCM;
+  private double ticks;
+
+  public MoveDistance(DriveTrain driveTrain, double distanceCM) {
     this.driveTrain = driveTrain;
+    this.distanceCM = distanceCM;
+    this.ticks = driveTrain.getCmTicks(distanceCM);
     addRequirements(driveTrain);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("qpd");
+    while (driveTrain.getEncoderAvg() < ticks) {
+      driveTrain.arcadeDrive(Constants.autonomousSpeed, 0);
+      System.out.println("jala");
+    }
+
     driveTrain.arcadeDrive(0, 0);
-    driveTrain.resetEncoder();
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

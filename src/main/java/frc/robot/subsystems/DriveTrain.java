@@ -63,11 +63,15 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.reset();
   }
 
-  public double getEncoderRaw() {
+  public double getEncoderAvg() {
     return (m_leftEncoder.get() + m_rightEncoder.get()) * 0.5;
   }
 
+  public double getCmTicks(double cm) {
+    return cm / 50 * 360;
+  }
+
   public double getEncoderDistance() {
-    return getEncoderRaw() / 360 * 50;
+    return getEncoderAvg() / 360 * 50;
   }
 }

@@ -1,6 +1,8 @@
 package frc.robot;
 
 public final class Constants {
+  public static final double autonomousSpeed = 0.3;
+
   public static final int driverControllerPort = 0;
   public static final int operatorControllerPort = 1;
 

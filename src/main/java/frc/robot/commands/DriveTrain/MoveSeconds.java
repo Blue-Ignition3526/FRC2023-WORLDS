@@ -4,16 +4,25 @@
 
 package frc.robot.commands.DriveTrain;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class ResetDriveTrainEncoders extends CommandBase {
-  DriveTrain driveTrain = null;
+public class MoveSeconds extends CommandBase {
+  private DriveTrain driveTrain;
+  private double seconds;
+  private Timer timer;
 
-  /** Creates a new ResetDriveTrainEncoders. */
-  public ResetDriveTrainEncoders(DriveTrain driveTrain) {
+  private boolean hasFinished = false;
+
+  /** Creates a new MoveSeconds. */
+  public MoveSeconds(DriveTrain driveTrain, double seconds) {
     this.driveTrain = driveTrain;
+    this.seconds = seconds;
+    this.timer = new Timer();
     addRequirements(driveTrain);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -23,17 +32,22 @@ public class ResetDriveTrainEncoders extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    while (timer.get() < seconds) {
+      driveTrain.arcadeDrive(Constants.autonomousSpeed, 0);
+    } 
     driveTrain.arcadeDrive(0, 0);
-    driveTrain.resetEncoder();
+    hasFinished = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveTrain.arcadeDrive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return hasFinished;
   }
 }
