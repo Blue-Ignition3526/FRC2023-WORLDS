@@ -33,6 +33,8 @@ public class Grabber extends SubsystemBase {
   // Subsystem commands ///////////////////////////////////////////////////////////////////
 
   public void grabberSet(double speed) {
-    grabber.set(speed);
+    try {
+      grabber.set(speed);
+    } catch (Exception err) {}
   }
 }
