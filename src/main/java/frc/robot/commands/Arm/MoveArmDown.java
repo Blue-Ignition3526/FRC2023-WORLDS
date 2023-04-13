@@ -41,6 +41,6 @@ public class MoveArmDown extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return !m_isActive;
   }
 }
