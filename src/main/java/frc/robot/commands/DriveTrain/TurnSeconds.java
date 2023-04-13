@@ -7,23 +7,22 @@ package frc.robot.commands.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Enum.DriveDirection;
 import frc.robot.Enum.TurnDirection;
 import frc.robot.subsystems.DriveTrain;
 
-public class MoveSeconds extends CommandBase {
+public class TurnSeconds extends CommandBase {
   private DriveTrain driveTrain;
   private double seconds;
   private Timer timer;
-  private DriveDirection driveDirection;
+  private TurnDirection turnDirection;
 
   private boolean hasFinished = false;
 
   /** Creates a new MoveSeconds. */
-  public MoveSeconds(DriveTrain driveTrain, double seconds, DriveDirection driveDirection) {
+  public TurnSeconds(DriveTrain driveTrain, double seconds, TurnDirection turnDirection) {
     this.driveTrain = driveTrain;
     this.seconds = seconds;
-    this.driveDirection = driveDirection;
+    this.turnDirection = turnDirection;
     this.timer = new Timer();
     addRequirements(driveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -37,10 +36,10 @@ public class MoveSeconds extends CommandBase {
   @Override
   public void execute() {
     while (timer.get() < seconds) {
-      if (driveDirection == DriveDirection.BACKWARD) {
-        driveTrain.arcadeDrive(-Constants.autonomousSpeed, 0);
+      if (turnDirection == TurnDirection.LEFT) {
+        driveTrain.arcadeDrive(0, -Constants.autonomousSpeed);
       } else {
-        driveTrain.arcadeDrive(Constants.autonomousSpeed, 0);
+        driveTrain.arcadeDrive(0, Constants.autonomousSpeed);
       }
     } 
     driveTrain.arcadeDrive(0, 0);
