@@ -32,7 +32,11 @@ public class MoveArmAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.armSet(Constants.Speeds.armUp);
+    if (angle > 0) {
+      arm.armSet(Constants.Speeds.armUp);
+    } else if (angle < 0) {
+      arm.armSet(Constants.Speeds.armDown);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -46,7 +50,7 @@ public class MoveArmAngle extends CommandBase {
   public boolean isFinished() {
     if (m_timer.get() >= 6.0) {
       return true;
-    } else if (Math.abs(arm.getEncoderAngle()) > angle) {
+    } else if ((Math.abs(angle) - Math.abs(arm.getEncoderAngle())) < 0.1) {
       return true;
     }
     return false;

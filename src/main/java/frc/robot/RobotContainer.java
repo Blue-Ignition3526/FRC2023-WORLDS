@@ -20,13 +20,17 @@ import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.LED;
+import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.Grabber;
 
 // Other Libraries ////////////////////////////////////////////////////////////////////////////////////
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -39,8 +43,11 @@ public class RobotContainer {
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Arm m_arm = new Arm();
   private final Grabber m_grabber = new Grabber();
+  private final LimeLight m_limeLight = new LimeLight();
   //private final ColorSensor m_colorSensor = new ColorSensor();
   //private final LED m_led = new LED();
+
+  private final SendableChooser<String> autonomousChooser = new SendableChooser<>();
 
 // Controller & Triggers //////////////////////////////////////////////////////////////////////////////
 
@@ -59,7 +66,11 @@ public class RobotContainer {
 // Robot Container /////////////////////////////////////////////////////////////////////////////////////
 
   public RobotContainer() {
-    //m_led.setRGB(51 / 255, 0, 1);
+    autonomousChooser.addOption("Leave Community", "LeaveCommunity");
+    autonomousChooser.addOption("Leave Game Piece and Community", "LeaveGamePieceAndCommunity");
+    autonomousChooser.addOption("Throw Game Piece and Leave Community", "ThrowGamePieceAndCommunity");
+    autonomousChooser.setDefaultOption("Leave Community", "LeaveCommunity");
+    SmartDashboard.putData(autonomousChooser);
 
     m_driveTrain.setDefaultCommand(new Drive(m_driveTrain, () -> m_driverController.getLeftY(), () -> m_driverController.getRightY()));
 
@@ -84,6 +95,22 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new LeaveGamePieceAndCommunity(m_driveTrain, m_arm, m_grabber);
+    switch(autonomousChooser.getSelected()) {
+      case "LeaveCommunity": {
+        return new LeaveCommunity(m_driveTrain, DriveDirection.BACKWARD);
+      }
+
+      case "LeaveGamePieceAndCommunity": {
+        return new LeaveGamePieceAndCommunity(m_driveTrain, m_arm, m_grabber);
+      }
+
+      case "ThrowGamePieceAndCommunity": {
+        return new ThrowGamePieceAndCommunity(m_driveTrain, m_arm, m_grabber);
+      }
+
+      default: {
+        return new WaitCommand(1);
+      }
+    }
   }
 }
