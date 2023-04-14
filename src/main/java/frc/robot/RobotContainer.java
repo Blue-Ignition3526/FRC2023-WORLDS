@@ -5,6 +5,7 @@ import frc.robot.commands.Arm.MoveArmAngle;
 import frc.robot.commands.Arm.MoveArmDown;
 import frc.robot.commands.Arm.MoveArmUp;
 import frc.robot.commands.Autonomous.LeaveCommunity;
+import frc.robot.commands.Autonomous.LeaveGamePieceAndCommunity;
 import frc.robot.commands.Autonomous.ThrowGamePieceAndCommunity;
 import frc.robot.commands.DriveTrain.Drive;
 import frc.robot.commands.DriveTrain.MoveDistance;
@@ -83,6 +84,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new ThrowGamePieceAndCommunity(m_driveTrain, m_arm, m_grabber);
+    return new LeaveGamePieceAndCommunity(m_driveTrain, m_arm, m_grabber);
   }
 }

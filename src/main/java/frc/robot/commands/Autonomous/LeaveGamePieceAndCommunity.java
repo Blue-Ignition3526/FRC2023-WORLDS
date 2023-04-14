@@ -17,7 +17,7 @@ public class LeaveGamePieceAndCommunity extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveArmAngle(arm, 70),
+      new MoveArmAngle(arm, 75),
       new MoveArmAngle(arm, -50),
       new LeaveCommunity(driveTrain, DriveDirection.FORWARD)
     );
