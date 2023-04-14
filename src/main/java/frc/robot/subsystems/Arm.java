@@ -83,6 +83,7 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Arm Encoder Raw", m_Encoder.get());
     SmartDashboard.putNumber("Arm Rotation", getEncoderAngle());
 
     try {
@@ -90,7 +91,7 @@ public class Arm extends SubsystemBase {
     } catch (Exception err) {}
   }
 
-  // Subsystem commands ///////////////////////////////////////////////////////////////////////
+  // Subsystem commands //////////////////////////////////////////////////////////////////////
 
   public void armSet(double speed) {
     try {
@@ -108,9 +109,13 @@ public class Arm extends SubsystemBase {
 
   public double getEncoderAngle() {
     try {
-      return m_Encoder.get() * 360 / 8192;
+      return m_Encoder.get() * 360 / 2048;
     } catch (Exception err) {
       return 0;
     }
+  }
+
+  public void resetEncoder() {
+    m_Encoder.reset();
   }
 }
