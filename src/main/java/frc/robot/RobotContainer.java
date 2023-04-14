@@ -1,8 +1,11 @@
 package frc.robot;
 
+import frc.robot.Enum.DriveDirection;
+import frc.robot.commands.Arm.MoveArmAngle;
 import frc.robot.commands.Arm.MoveArmDown;
 import frc.robot.commands.Arm.MoveArmUp;
 import frc.robot.commands.Autonomous.LeaveCommunity;
+import frc.robot.commands.Autonomous.ThrowGamePieceAndCommunity;
 import frc.robot.commands.DriveTrain.Drive;
 import frc.robot.commands.DriveTrain.MoveDistance;
 import frc.robot.commands.DriveTrain.ResetDriveTrainEncoders;
@@ -80,6 +83,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new LeaveCommunity(m_driveTrain);
+    return new ThrowGamePieceAndCommunity(m_driveTrain, m_arm, m_grabber);
   }
 }

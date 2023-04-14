@@ -16,8 +16,6 @@ public class TurnSeconds extends CommandBase {
   private Timer timer;
   private TurnDirection turnDirection;
 
-  private boolean hasFinished = false;
-
   /** Creates a new MoveSeconds. */
   public TurnSeconds(DriveTrain driveTrain, double seconds, TurnDirection turnDirection) {
     this.driveTrain = driveTrain;
@@ -35,15 +33,12 @@ public class TurnSeconds extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while (timer.get() < seconds) {
-      if (turnDirection == TurnDirection.LEFT) {
-        driveTrain.arcadeDrive(0, -Constants.autonomousSpeed);
-      } else {
-        driveTrain.arcadeDrive(0, Constants.autonomousSpeed);
-      }
-    } 
+    if (turnDirection == TurnDirection.LEFT) {
+      driveTrain.arcadeDrive(0, -Constants.autonomousSpeed);
+    } else {
+      driveTrain.arcadeDrive(0, Constants.autonomousSpeed);
+    }
     driveTrain.arcadeDrive(0, 0);
-    hasFinished = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +50,6 @@ public class TurnSeconds extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return hasFinished;
+    return timer.get() >= seconds;
   }
 }

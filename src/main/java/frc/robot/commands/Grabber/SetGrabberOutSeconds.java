@@ -4,45 +4,46 @@
 
 package frc.robot.commands.Grabber;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Grabber;
 
-public class SetGrabberOut extends CommandBase {
+public class SetGrabberOutSeconds extends CommandBase {
   private Grabber grabber;
-  private boolean active;
+  private double seconds;
+  private Timer timer = new Timer();
 
-  /** Creates a new SetGrabberIn. */
-  public SetGrabberOut(Grabber grabber, boolean active) {
+  /** Creates a new SetGrabberOutSeconds. */
+  public SetGrabberOutSeconds(Grabber grabber, double seconds) {
     this.grabber = grabber;
-    this.active = active;
+    this.seconds = seconds;
     addRequirements(grabber);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (active) {
-      grabber.grabberSet(Constants.Speeds.grabberOut);
-    } else {
-      grabber.grabberSet(0);
-    }
+    grabber.grabberSet(Constants.Speeds.grabberOut);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    grabber.grabberSet(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return timer.get() >= seconds;
   }
 }

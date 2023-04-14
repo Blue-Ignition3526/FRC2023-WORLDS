@@ -6,14 +6,17 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Enum.DriveDirection;
 import frc.robot.subsystems.DriveTrain;
 
 public class LeaveCommunity extends CommandBase {
 
   private final DriveTrain driveTrain;
   private final Timer m_timer = new Timer();
+  private DriveDirection direction;
 
-  public LeaveCommunity(DriveTrain driveTrain) {
+  public LeaveCommunity(DriveTrain driveTrain, DriveDirection direction) {
+    this.direction = direction;
     this.driveTrain = driveTrain;
     addRequirements(driveTrain);
   }
@@ -29,7 +32,11 @@ public class LeaveCommunity extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.drive(0.5, 0.46);
+    if (direction == DriveDirection.BACKWARD) {
+      driveTrain.drive(-0.5, -0.46);
+    } else {
+      driveTrain.drive(0.5, 0.46);
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -4,39 +4,51 @@
 
 package frc.robot.commands.Arm;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.LimeLight;
 
-public class MoveArmTowardsTarget extends CommandBase {
-  private LimeLight m_limeLight = null;
-  private Arm m_arm = null;
+public class MoveArmAngle extends CommandBase {
+  private Arm arm;
+  private double angle;
+  private Timer m_timer = new Timer();
 
-  /** Creates a new MoveArmTowardsTarget. */
-  public MoveArmTowardsTarget(LimeLight limeLight, Arm arm) {
-    this.m_limeLight = limeLight;
-    this.m_arm = arm;
-    addRequirements(limeLight, arm);
-    // Use addRequirements() here to declare subsystem dependencies.
+  /** Creates a new MoveArmAngle. */
+  public MoveArmAngle(Arm arm, double angle) {
+    this.arm = arm;
+    this.angle = angle;
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    arm.resetEncoder();
+    m_timer.reset();
+    m_timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    arm.armSet(Constants.Speeds.armUp);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    arm.armSet(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (m_timer.get() >= 6.0) {
+      return true;
+    } else if (Math.abs(arm.getEncoderAngle()) > angle) {
+      return true;
+    }
     return false;
   }
 }
