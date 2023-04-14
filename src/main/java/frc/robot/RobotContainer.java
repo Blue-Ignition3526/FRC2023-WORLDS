@@ -97,7 +97,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     switch(autonomousChooser.getSelected()) {
       case "LeaveCommunity": {
-        return new LeaveCommunity(m_driveTrain, DriveDirection.BACKWARD);
+        return new LeaveCommunity(m_driveTrain, DriveDirection.FORWARD);
       }
 
       case "LeaveGamePieceAndCommunity": {

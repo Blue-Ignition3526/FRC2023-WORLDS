@@ -7,15 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimeLight extends SubsystemBase {
-    public NetworkTable m_limeLightTable = null;
+    public NetworkTable m_limeLightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
-    public LimeLight() {
-        try {
-            this.m_limeLightTable = NetworkTableInstance.getDefault().getTable("limelight");
-        } catch (Exception err) {
-            System.out.println("Error, Limelight disabled: " + err);
-        }
-    }
+    public LimeLight() {}
 
     private NetworkTableEntry tv = m_limeLightTable.getEntry("tv");  // Whether the limelight has any valid targets (0 or 1)
     private NetworkTableEntry tx = m_limeLightTable.getEntry("tx");  // Horizontal Offset From Crosshair To Target (-27 degrees to 27 degrees)
