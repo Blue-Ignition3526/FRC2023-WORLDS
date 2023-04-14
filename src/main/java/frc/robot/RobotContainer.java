@@ -2,9 +2,11 @@ package frc.robot;
 
 import frc.robot.commands.Arm.MoveArmDown;
 import frc.robot.commands.Arm.MoveArmUp;
+import frc.robot.commands.Autonomous.LeaveCommunity;
 import frc.robot.commands.DriveTrain.Drive;
 import frc.robot.commands.DriveTrain.MoveDistance;
 import frc.robot.commands.DriveTrain.ResetDriveTrainEncoders;
+import frc.robot.commands.Grabber.SetGrabberHold;
 import frc.robot.commands.Grabber.SetGrabberIn;
 import frc.robot.commands.Grabber.SetGrabberOut;
 
@@ -33,6 +35,7 @@ public class RobotContainer {
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Arm m_arm = new Arm();
   private final Grabber m_grabber = new Grabber();
+  //private final ColorSensor m_colorSensor = new ColorSensor();
   //private final LED m_led = new LED();
 
 // Controller & Triggers //////////////////////////////////////////////////////////////////////////////
@@ -68,14 +71,15 @@ public class RobotContainer {
     m_operatorController.povDown().onTrue(new MoveArmDown(m_arm, true));
     m_operatorController.povDown().onFalse(new MoveArmDown(m_arm, false));
 
-    m_operatorController.leftTrigger(0.85).onTrue(new SetGrabberIn(m_grabber));
-    m_operatorController.leftTrigger(0.85).onFalse(new SetGrabberIn(m_grabber));
+    m_operatorController.leftTrigger(0.85).toggleOnTrue(new SetGrabberIn(m_grabber));
 
-    m_operatorController.rightTrigger(0.85).onTrue(new SetGrabberOut(m_grabber));
-    m_operatorController.rightTrigger(0.85).onFalse(new SetGrabberOut(m_grabber));
+    m_operatorController.rightTrigger(0.85).onTrue(new SetGrabberOut(m_grabber, true));
+    m_operatorController.rightTrigger(0.85).onFalse(new SetGrabberOut(m_grabber, false));
+
+    m_operatorController.a().toggleOnTrue(new SetGrabberHold(m_grabber));
   }
 
   public Command getAutonomousCommand() {
-    return null;
+    return new LeaveCommunity(m_driveTrain);
   }
 }

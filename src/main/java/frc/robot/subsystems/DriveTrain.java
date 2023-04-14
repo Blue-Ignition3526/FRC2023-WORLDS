@@ -68,7 +68,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public double getCmTicks(double cm) {
-    return cm / 50 * 360;
+    return cm / 45 * 360;
   }
 
   public double getEncoderDistance() {

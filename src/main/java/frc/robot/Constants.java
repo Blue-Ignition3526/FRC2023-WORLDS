@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Color;
+
 public final class Constants {
   public static final double autonomousSpeed = 0.3;
 
@@ -16,6 +18,9 @@ public final class Constants {
 
   public static final double limeLightHeight = 187.5;
   public static final double armLength = 57;
+
+  public static final Color coneColor = new Color(0.37254901960784315, 0.5254901960784314, 0.10588235294117647);
+  public static final Color cubeColor = new Color(0.19215686274509805, 0.29411764705882354, 0.5058823529411764);
   
   public static final class Encoders {
     public static final int[] leftEncoder = new int[]{0, 1};
@@ -62,7 +67,7 @@ public final class Constants {
       }
 
       public final class Grabber {
-        public static final int grabber = 15;
+        public static final int grabber = 9;
       }
     }
   }

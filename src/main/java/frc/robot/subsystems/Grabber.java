@@ -11,13 +11,13 @@ import frc.robot.Constants;
 
 public class Grabber extends SubsystemBase {
 
-  public CANSparkMax grabber = null;
+  public CANSparkMax grabber;
   
   // Robot Init ///////////////////////////////////////////////////////////////////////////
 
   public Grabber() {
     try {
-      this.grabber = new CANSparkMax(Constants.Motors.BaymaxMotors.Grabber.grabber, MotorType.kBrushed);
+      this.grabber = new CANSparkMax(Constants.Motors.BaymaxMotors.Grabber.grabber, MotorType.kBrushless);
     } catch (Exception err) {
       System.out.println("Error, Grabber motor disabled: " + err);
     }

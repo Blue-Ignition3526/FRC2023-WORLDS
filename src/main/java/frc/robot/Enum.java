@@ -15,4 +15,10 @@ public class Enum {
         FORWARD,
         BACKWARD
     }
+
+    public enum GamePiece {
+        CONE,
+        CUBE,
+        NONE
+    }
 }

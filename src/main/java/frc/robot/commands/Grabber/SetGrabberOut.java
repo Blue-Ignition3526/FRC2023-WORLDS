@@ -9,10 +9,12 @@ import frc.robot.subsystems.Grabber;
 
 public class SetGrabberOut extends CommandBase {
   private Grabber grabber;
+  private boolean active;
 
   /** Creates a new SetGrabberIn. */
-  public SetGrabberOut(Grabber grabber) {
+  public SetGrabberOut(Grabber grabber, boolean active) {
     this.grabber = grabber;
+    this.active = active;
     addRequirements(grabber);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,12 +26,18 @@ public class SetGrabberOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    grabber.grabberSet(0.3);
+    if (active) {
+      grabber.grabberSet(0.7);
+    } else {
+      grabber.grabberSet(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+  }
 
   // Returns true when the command should end.
   @Override

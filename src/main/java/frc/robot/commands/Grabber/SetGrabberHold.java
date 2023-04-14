@@ -7,11 +7,11 @@ package frc.robot.commands.Grabber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Grabber;
 
-public class SetGrabberIn extends CommandBase {
+public class SetGrabberHold extends CommandBase {
   private Grabber grabber;
 
   /** Creates a new SetGrabberIn. */
-  public SetGrabberIn(Grabber grabber) {
+  public SetGrabberHold(Grabber grabber) {
     this.grabber = grabber;
     addRequirements(grabber);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +24,7 @@ public class SetGrabberIn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    grabber.grabberSet(-0.3);
+    grabber.grabberSet(-0.05);
   }
 
   // Called once the command ends or is interrupted.
