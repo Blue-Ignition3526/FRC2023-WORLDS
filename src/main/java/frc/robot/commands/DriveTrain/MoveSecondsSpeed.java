@@ -6,45 +6,34 @@ package frc.robot.commands.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.Enum.DriveDirection;
-import frc.robot.Enum.TurnDirection;
 import frc.robot.subsystems.DriveTrain;
 
-public class MoveSeconds extends CommandBase {
+public class MoveSecondsSpeed extends CommandBase {
   private DriveTrain driveTrain;
+  private double speed;
   private double seconds;
   private Timer timer;
-  private DriveDirection driveDirection;
 
-  private boolean hasFinished = false;
-
-  /** Creates a new MoveSeconds. */
-  public MoveSeconds(DriveTrain driveTrain, double seconds, DriveDirection driveDirection) {
+  /** Creates a new MoveSecondsSpeed. */
+  public MoveSecondsSpeed(DriveTrain driveTrain, double seconds, double speed) {
     this.driveTrain = driveTrain;
     this.seconds = seconds;
-    this.driveDirection = driveDirection;
-    this.timer = new Timer();
+    this.speed = speed;
     addRequirements(driveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while (timer.get() < seconds) {
-      if (driveDirection == DriveDirection.BACKWARD) {
-        driveTrain.arcadeDrive(-Constants.autonomousSpeed, 0);
-      } else {
-        driveTrain.arcadeDrive(Constants.autonomousSpeed, 0);
-      }
-    } 
-    driveTrain.arcadeDrive(0, 0);
-    hasFinished = true;
+    driveTrain.arcadeDrive(speed, 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -56,6 +45,6 @@ public class MoveSeconds extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return hasFinished;
+    return timer.get() >= seconds;
   }
 }
